@@ -1,19 +1,26 @@
 #stepForm {
-    width: 50vw;
+    width: 60%;
     margin: 0 auto 0 auto;
-}
-
-#stepForm .container {
-    width: 100%;
+    min-height: 40%;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     row-gap: 1rem;
 }
 
-#stepForm .range {
-    width: 100%;
+#stepForm .container {
+    width: 70%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    row-gap: 1rem;
+    padding: 40px;
+}
+
+#stepForm .range {
+    width: 80%;
+    display: flex;
+    justify-content: space-evenly;
     align-items: center;
 }
 
@@ -24,7 +31,7 @@
 #stepForm .cards {
     width: 100%;
     display: flex;
-    gap: 5vw;
+    gap: 5%;
     justify-content: start;
     align-items: start;
     flex-wrap: wrap;
@@ -32,8 +39,8 @@
 }
 
 #stepForm .card {
-    height: 15rem;
-    width: 20rem;
+    width: 30%;
+    aspect-ratio: 4/3;
     border-radius: 2.5rem;
     overflow: hidden;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -57,7 +64,7 @@
     position: relative;
     color: white;
     mix-blend-mode: difference;
-    bottom: calc(7.5rem + 1rem);
+    bottom: calc(50% + 1rem);
     text-align: center;
     font-size: 2rem;
     line-height: 1rem;
@@ -75,4 +82,109 @@
 
 #stepForm button:hover, button:focus {
     background-color: royalblue;
+}
+
+#stepForm .error {
+    color: red;
+}
+
+#stepForm .success {
+    color: dodgerblue;
+}
+
+#stepForm .stepper-wrapper {
+    height: max-content;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+#stepForm .stepper-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+
+    @media (max-width: 768px) {
+        font-size: 12px;
+    }
+}
+
+#stepForm .stepper-item::before {
+    position: absolute;
+    content: "";
+    border-bottom: 2px solid darkgray;
+    width: 100%;
+    top: 20px;
+    left: -50%;
+    z-index: 2;
+}
+
+#stepForm .stepper-item::after {
+    position: absolute;
+    content: "";
+    border-bottom: 2px solid darkgray;
+    width: 100%;
+    top: 20px;
+    left: 50%;
+    z-index: 2;
+}
+
+#stepForm .stepper-item .step-counter {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: darkgray;
+    margin-bottom: 6px;
+    color: white;
+}
+
+#stepForm .stepper-item.active {
+    font-weight: bold;
+}
+
+#stepForm .stepper-item.completed .step-counter {
+    background-color: dodgerblue;
+}
+
+#stepForm .stepper-item.completed::after {
+    position: absolute;
+    content: "";
+    border-bottom: 2px solid dodgerblue;
+    width: 100%;
+    top: 20px;
+    left: 50%;
+    z-index: 3;
+}
+
+#stepForm input, textarea {
+    border-radius: 15px;
+    font-size: 1rem;
+    padding: 1rem;
+    border: solid black 0.125rem;
+}
+
+#stepForm textarea {
+    resize: vertical;
+}
+
+#stepForm input:valid, textarea:valid {
+    border: solid dodgerblue 0.125rem;
+}
+
+#stepForm input:invalid, textarea:invalid {
+    border: solid orange 0.125rem;
+}
+
+#stepForm .stepper-item:first-child::before {
+    content: none;
+}
+#stepForm .stepper-item:last-child::after {
+    content: none;
 }

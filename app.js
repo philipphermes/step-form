@@ -6,27 +6,62 @@ window.addEventListener('load', () => {
     displayStep();
 })
 
-function displayStep() {
+function displayStep(responseStatus = null) {
     const step = getStep();
+
+    document.getElementById('stepForm').innerHTML = ""
+    displayBar()
 
     switch (step.type) {
         case 'cards':
-            document.getElementById('stepForm').innerHTML = ""
+
             displayCards(step)
             break;
         case 'rangeslider':
-            document.getElementById('stepForm').innerHTML = ""
             displayRangeSlider(step)
             break;
         case 'contact':
-            document.getElementById('stepForm').innerHTML = ""
             displayContact(step)
+            break;
+        case 'final':
+            displayFinal(step, responseStatus)
             break;
         default:
             break;
     }
 }
 
+function displayBar() {
+    const wrapper = document.createElement('div')
+    wrapper.classList.add('stepper-wrapper')
+
+    for (let key in steps) {
+        if (steps[key].type === 'final') {
+            continue
+        }
+
+        const item = document.createElement('div')
+        item.classList.add('stepper-item')
+
+        const stepNr = parseInt(key) + 1;
+
+        if (selected.length >= stepNr) {
+            item.classList.add('completed')
+        }
+
+        const nr = document.createElement('span')
+        nr.classList.add('step-counter')
+        nr.innerHTML = stepNr.toString()
+
+        item.appendChild(nr);
+
+        wrapper.appendChild(item)
+
+
+    }
+
+    document.getElementById('stepForm').appendChild(wrapper)
+}
 
 function displayCards(step) {
     const name = document.createElement('h2')
@@ -101,14 +136,11 @@ function displayRangeSlider(step) {
         displayStep()
     })
 
-    const div = document.createElement('div');
-    div.classList.add('container');
-    div.appendChild(name)
-    div.appendChild(description)
-    div.appendChild(sliderDiv)
-    div.appendChild(button)
 
-    document.getElementById('stepForm').appendChild(div)
+    document.getElementById('stepForm').appendChild(name)
+    document.getElementById('stepForm').appendChild(description)
+    document.getElementById('stepForm').appendChild(sliderDiv)
+    document.getElementById('stepForm').appendChild(button)
 
     slider.addEventListener('input', () => {
         sliderVal.innerHTML = slider.value + "€"
@@ -150,6 +182,7 @@ function displayContact(step) {
             const textarea = document.createElement('textarea')
             textarea.id = field.id
             textarea.name = field.name
+            textarea.required = field.required
 
             div.appendChild(label)
             div.appendChild(textarea)
@@ -163,25 +196,63 @@ function displayContact(step) {
 
     button.addEventListener('click', () => {
         const fields = [];
-        //TODO check if emoty
+        let empty = false
+
         step.fields.forEach(field => {
             const input = document.getElementById(field.id);
-            fields.push({
-                name: field.name,
-                value: input.value
+
+            if (field.required === true && input.value === '') {
+                empty = true
+            }
+        })
+
+        if (empty === false) {
+            step.fields.forEach(field => {
+                const input = document.getElementById(field.id);
+                fields.push({
+                    name: field.name,
+                    value: input.value
+                })
             })
-        })
 
-        selected.push({
-            fields: fields
-        })
+            selected.push({
+                fields: fields
+            })
 
-        console.log(selected);
-
-        displayStep()
+            fetch(step.destination, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(selected)
+            }).then(response => {
+                displayStep(response.status)
+            }).catch(onerror => {
+                displayStep(onerror.status) //TODO so richtig?
+            });
+        }
     })
 
     document.getElementById('stepForm').appendChild(div)
+}
+
+function displayFinal(step, responseStatus) {
+    const title = document.createElement('h2')
+    title.innerHTML = step.title
+    document.getElementById('stepForm').appendChild(title)
+
+    const message = document.createElement('span')
+
+    if (responseStatus === 200) {
+        message.innerHTML = step.success
+        message.classList.add('success')
+    } else {
+        message.innerHTML = step.error
+        message.classList.add('error')
+    }
+
+    document.getElementById('stepForm').appendChild(message)
 }
 
 function getStep() {

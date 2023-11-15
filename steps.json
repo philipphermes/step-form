@@ -33,6 +33,7 @@
         "name": "Bitte geben Sie ihre Daten an?",
         "description": "Dieser Schritt ist erforderlich, damit wir ihnen ein Passendes Angbeot zukommenlassen können",
         "button": "Absenden",
+        "destination": "http://localhost:8000/contact",
         "fields": [
             {
                 "id": "email",
@@ -73,6 +74,7 @@
     },
     {
         "type": "final",
+        "title": "TADA!",
         "success": "Ihre anfrage wurde erfolgreich versendet",
         "error": "Beim versenden der Anfrage ist etwas schiefgeganen, bitte versuchen Sie es später erneut"
     }
