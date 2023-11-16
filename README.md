@@ -1,43 +1,75 @@
 # Step Form
 
-## Steps example
+## Usage
 
-```json
-[
+1. Add this to your head:
+    ```html
+        <script type="module" src="app.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" />
+    ```
+2. Add this to your body
+    ```html
+        <div id="stepForm"></div>
+    ```
+3. Change the location of the json file here: `import steps from './steps.json' assert {type: 'json'};` //TODO change to class and set the file via constructor
+4. configure the steps.json
+
+## steps.json
+
+### Cards
+* Displays card with image and text
+* fields:
+  ```json
     {
         "type": "cards",
-        "name": "Was können wir für Sie machen?",
-        "description": "Bitte wählen Sie das Passende angebot aus",
+        "name": "What can we do for you?",
+        "description": "Please select a service",
         "objects": [
             {
                 "name": "E-Commerce",
-                "img": "testImages/wp7011387-sazabi-wallpapers.jpg"
+                "img": "image.jpg"
             },
             {
                 "name": "Content creation",
-                "img": "testImages/wp7011407-sazabi-wallpapers.jpg"
+                "img": "image2.jpg"
             },
             {
                 "name": "Marketing",
-                "img": "testImages/wp7011526-sazabi-wallpapers.jpg"
+                "img": "image3.jpg"
             }
         ]
-    },
-    {
+    }
+  ```
+
+### Rangeslider
+* Creats a rangeslider
+* fields:
+    ```json
+      {
         "type": "rangeslider",
-        "name": "Wie hoch ist ihr Budget?",
-        "description": "Wenn Sie 0€ auswählen heißt es, dass Sie kein bestimmtes Budget haben",
+        "name": "What is your budget?",
+        "description": "If you select 0 € it means you don't have a specific budget",
         "range": {
             "min": 0, 
             "max": 10000
         },
-        "button": "Weiter"
-    },
-    {
+        "button": "Next"
+    }
+    ```
+  
+### Contact
+* Creates a contact form which will sent the data as json to the given url
+* supported inputs:
+  * input
+  * textarea
+* fields:
+    ```json
+      {
         "type": "contact",
-        "name": "Bitte geben Sie ihre Daten an?",
-        "description": "Dieser Schritt ist erforderlich, damit wir ihnen ein Passendes Angbeot zukommenlassen können",
-        "button": "Absenden",
+        "name": "Please provide your details",
+        "description": "This step is necessary so that we can send you a suitable offer",
+        "button": "Submit",
+        "destination": "http://localhost:8000/contact",
         "fields": [
             {
                 "id": "email",
@@ -54,32 +86,38 @@
                 "required": true
             },
             {
-                "id": "vorname",
-                "name": "vorname",
+                "id": "firstname",
+                "name": "firstname",
                 "type": "text",
-                "label": "Vorname",
+                "label": "Firstname",
                 "required": true
             },
             {
-                "id": "organisation",
-                "name": "organisation",
+                "id": "organization",
+                "name": "organization",
                 "type": "text",
-                "label": "Organisation",
+                "label": "Organization",
                 "required": true
             },
             {
-                "id": "beschreibung",
-                "name": "beschreibung",
+                "id": "description",
+                "name": "description",
                 "type": "textarea",
-                "label": "Beschreibung",
-                "required": true
+                "label": "Description",
+                "required": false
             }
         ]
-    },
-    {
-        "type": "final",
-        "success": "Ihre anfrage wurde erfolgreich versendet",
-        "error": "Beim versenden der Anfrage ist etwas schiefgeganen, bitte versuchen Sie es später erneut"
     }
-]
-```
+    ```
+  
+### Final
+* Creates a page wich will show if the contact request was successfully or an error occurred
+* fields:
+    ```json
+      {
+        "type": "final",
+        "title": "Success!",
+        "success": "Your request has been sent successfully",
+        "error": "Something went wrong while sending the request, please try again later"
+      }
+    ```
