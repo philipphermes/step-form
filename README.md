@@ -11,7 +11,7 @@
     ```html
         <div id="stepForm"></div>
     ```
-3. Change the location of the json file here: `import steps from './steps.json' assert {type: 'json'};` //TODO change to class and set the file via constructor
+3. Change the location of the json file here: `import steps from './steps.json' assert {type: 'json'};`
 4. configure the steps.json
 
 ## steps.json
