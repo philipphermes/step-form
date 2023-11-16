@@ -109,6 +109,41 @@
         ]
     }
     ```
+  * request JSON
+      ```json
+        [
+            {
+              "card": "E-Commerce"
+            },
+            {
+              "range": "1000"
+            },
+            {
+              "fields": [
+                {
+                  "name": "email",
+                  "value": "test@email.com"
+                },
+                {
+                  "name": "name",
+                  "value": "Mustermann"
+                },
+                {
+                  "name": "vorname",
+                  "value": "Max"
+                },
+                {
+                  "name": "organisation",
+                  "value": "Philipps"
+                },
+                {
+                  "name": "beschreibung",
+                  "value": "Hi"
+                }
+              ]
+            }
+        ]
+    ```
   
 ### Final
 * Creates a page wich will show if the contact request was successfully or an error occurred
