@@ -1,12 +1,13 @@
 #stepForm {
     width: 60%;
     margin: 0 auto 0 auto;
-    min-height: 40%;
+    min-height: 80%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
     row-gap: 1rem;
+    padding: 10px;
 }
 
 #stepForm .container {
@@ -14,13 +15,18 @@
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
-    padding: 40px;
+
+    @media (max-width: 768px) {
+        width: 85%;
+    }
 }
 
+
+
 #stepForm .range {
-    width: 80%;
+    width: 100%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -71,6 +77,24 @@
     pointer-events: none;
 }
 
+@media (max-width: 768px) {
+    #stepForm .cards {
+        margin-top: 0;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    #stepForm .card {
+        width: 100%;
+    }
+
+    #stepForm .card h3 {
+        bottom: calc(50% + 0.75rem);
+        font-size: 1.5rem;
+        line-height: 1rem;
+    }
+}
+
 #stepForm button {
     width: min-content;
     padding: 10px;
@@ -93,11 +117,14 @@
 }
 
 #stepForm .stepper-wrapper {
-    height: max-content;
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 4rem;
+
+    @media (max-width: 768px) {
+        margin-bottom: 1rem;
+    }
 }
 #stepForm .stepper-item {
     position: relative;

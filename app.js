@@ -14,7 +14,6 @@ function displayStep(responseStatus = null) {
 
     switch (step.type) {
         case 'cards':
-
             displayCards(step)
             break;
         case 'rangeslider':
@@ -64,13 +63,16 @@ function displayBar() {
 }
 
 function displayCards(step) {
+    const container = document.createElement('div')
+    container.classList.add('container')
+
     const name = document.createElement('h2')
     name.innerHTML = step.name
-    document.getElementById('stepForm').appendChild(name)
+    container.appendChild(name)
 
     const description = document.createElement('span')
     description.innerHTML = step.description
-    document.getElementById('stepForm').appendChild(description)
+    container.appendChild(description)
 
     const cards = document.createElement('div')
     cards.classList.add('cards')
@@ -99,10 +101,14 @@ function displayCards(step) {
         })
     })
 
-    document.getElementById('stepForm').appendChild(cards)
+    container.appendChild(cards)
+    document.getElementById('stepForm').appendChild(container)
 }
 
 function displayRangeSlider(step) {
+    const container = document.createElement('div')
+    container.classList.add('container')
+
     const name = document.createElement('h2')
     name.innerHTML = step.name
 
@@ -137,10 +143,12 @@ function displayRangeSlider(step) {
     })
 
 
-    document.getElementById('stepForm').appendChild(name)
-    document.getElementById('stepForm').appendChild(description)
-    document.getElementById('stepForm').appendChild(sliderDiv)
-    document.getElementById('stepForm').appendChild(button)
+    container.appendChild(name)
+    container.appendChild(description)
+    container.appendChild(sliderDiv)
+    container.appendChild(button)
+
+    document.getElementById('stepForm').appendChild(container)
 
     slider.addEventListener('input', () => {
         sliderVal.innerHTML = slider.value + "€"
@@ -148,16 +156,16 @@ function displayRangeSlider(step) {
 }
 
 function displayContact(step) {
+    const container = document.createElement('div');
+    container.classList.add('container');
+
     const name = document.createElement('h2')
     name.innerHTML = step.name
-    document.getElementById('stepForm').appendChild(name)
+    container.appendChild(name)
 
     const description = document.createElement('span')
     description.innerHTML = step.description
-    document.getElementById('stepForm').appendChild(description)
-
-    const div = document.createElement('div');
-    div.classList.add('container');
+    container.appendChild(description)
 
     step.fields.forEach(field => {
         if (field.type === 'text' || field.type === 'email') {
@@ -172,8 +180,8 @@ function displayContact(step) {
             input.name = field.name
             input.placeholder = field.label
 
-            div.appendChild(label)
-            div.appendChild(input)
+            container.appendChild(label)
+            container.appendChild(input)
         } else if (field.type === 'textarea') {
             const label = document.createElement('label')
             label.for = field.id
@@ -184,15 +192,15 @@ function displayContact(step) {
             textarea.name = field.name
             textarea.required = field.required
 
-            div.appendChild(label)
-            div.appendChild(textarea)
+            container.appendChild(label)
+            container.appendChild(textarea)
         }
     })
 
     const button = document.createElement('button')
     button.type = "button"
     button.innerHTML = step.button
-    div.appendChild(button)
+    container.appendChild(button)
 
     button.addEventListener('click', () => {
         const fields = [];
@@ -229,18 +237,21 @@ function displayContact(step) {
             }).then(response => {
                 displayStep(response.status)
             }).catch(onerror => {
-                displayStep(onerror.status) //TODO so richtig?
+                displayStep(onerror.status)
             });
         }
     })
 
-    document.getElementById('stepForm').appendChild(div)
+    document.getElementById('stepForm').appendChild(container)
 }
 
 function displayFinal(step, responseStatus) {
+    const container = document.createElement('div');
+    container.classList.add('container');
+
     const title = document.createElement('h2')
     title.innerHTML = step.title
-    document.getElementById('stepForm').appendChild(title)
+    container.appendChild(title)
 
     const message = document.createElement('span')
 
@@ -252,6 +263,7 @@ function displayFinal(step, responseStatus) {
         message.classList.add('error')
     }
 
+    container.appendChild(message)
     document.getElementById('stepForm').appendChild(message)
 }
 
